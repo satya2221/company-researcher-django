@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import View
-from .methods import generate_queries, research
+from .methods import generate_queries, research, generate_business_profile
 
 # Create your views here.
 class IndexView(View):
@@ -28,5 +28,9 @@ class IndexView(View):
             response = research(query)
 
             context += f"Query: {query} \nResponse: {response}\n\n"
+
+        business_profile = generate_business_profile(context)
+
+        print(business_profile)
 
         return render(request, "index.html")

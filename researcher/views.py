@@ -22,5 +22,11 @@ class IndexView(View):
         queries.extend(operations_queries.get("queries"))
         queries.extend(corporate_history_queries.get("queries"))
 
+        context = ""
+
+        for query in queries:
+            response = research(query)
+
+            context += f"Query: {query} \nResponse: {response}\n\n"
 
         return render(request, "index.html")

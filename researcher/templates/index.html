@@ -18,13 +18,31 @@
             <input type="text" name="company_name" placeholder="Company Name">
             <button type="submit">Search the company</button>
         </form>
+
+        <section id="log"></section>
+        <section id="content"></section>
     </main>
 
     <script>
         const ws = new WebSocket("ws://localhost:8000/ws/notifications/");
 
         ws.onmessage = function(event) {
-            console.log(event.data)
+            const data = JSON.parse(event.data);
+
+            const type = data.message.type;
+            const content = data.message.content;
+
+            if(type == "notification"){
+                const notificationLog = document.getElementById("log");
+                notificationLog.innerHTML += `<p>${content}</p>`;
+            }
+            if (type == "final_result") {
+                const notificationLog = document.getElementById("log");
+                notificationLog.innerHTML = "";
+
+                const contentSection = document.getElementById("content");
+                contentSection.innerHTML = content;
+            }
         }
 
         ws.onopen = function(event) {

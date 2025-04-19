@@ -19,5 +19,21 @@
             <button type="submit">Search the company</button>
         </form>
     </main>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:8000/ws/notifications/");
+
+        ws.onmessage = function(event) {
+            console.log(event.data)
+        }
+
+        ws.onopen = function(event) {
+            console.log("Connected To Websocket");
+        }
+
+        ws.onclose = function(event) {
+            console.log("Disconnected from websocket")
+        }
+    </script>
 </body>
 </html>
